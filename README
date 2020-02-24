@@ -1,0 +1,42 @@
+Run the docker containers
+$cd docker
+$docker-compose up
+
+enter on phpldapadmin with
+user= cn=admin,dc=daf,dc=test,dc=it
+password= admin
+
+
+import the following lines
+
+dn: ou=people,dc=jpf,dc=pt
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+dn: uid=u1,ou=people,dc=jpf,dc=pt
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: u1
+sn: u1
+uid: u1
+userPassword: {MD5}X03MO1qnZdYdgyfeuILPmQ==
+
+Run the application
+./mvnw spring-boot:run
+
+Browse to localhost:8080 and login with
+user = u1
+password = password
+
+
+If a new passwor dis needed for the impor run the following command
+docker exec ldap slappasswd -h "{MD5}" -s NEW_PASSWORD
+
+Documents used
+
+https://github.com/italia/daf-recipes/blob/master/ldap/docker-compose.yml
+https://spring.io/guides/gs/authenticating-ldap/
+https://www.opencodez.com/java/configure-ldap-authentication-using-spring-boot.htm
