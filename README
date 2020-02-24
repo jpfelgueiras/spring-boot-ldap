@@ -35,8 +35,17 @@ password = password
 If a new passwor dis needed for the impor run the following command
 docker exec ldap slappasswd -h "{MD5}" -s NEW_PASSWORD
 
+To create a docker container for this application
+./mvnw package
+docker build -t jpf/spring-boot-ldap .
+docker run -p 8080:8080 --name spring_boot_ldap -t jpf/spring-boot-ldap
+docker network connect docker_ldap spring_boot_ldap
+
+
+
 Documents used
 
 https://github.com/italia/daf-recipes/blob/master/ldap/docker-compose.yml
 https://spring.io/guides/gs/authenticating-ldap/
 https://www.opencodez.com/java/configure-ldap-authentication-using-spring-boot.htm
+https://spring.io/guides/gs/spring-boot-docker/
